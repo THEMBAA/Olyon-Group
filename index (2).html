@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olyon Group Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+ --navy: #0A2342;
+ --navy-mid: #0F2E4E;
+ --navy-deep: #071828;
+ --gold: #C9A84C;
+ --gold-light: #E8C97A;
+ --gold-muted: rgba(201,168,76,0.15);
+ --white: #FFFFFF;
+ --slate: #8A9BB5;
+ --slate-light: #B8C4D4;
+ --border: rgba(201,168,76,0.18);
+ --glass: rgba(10,35,66,0.94);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--navy); color:#E2E8F0; overflow-x:hidden; }
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:var(--navy); }
+::-webkit-scrollbar-thumb { background:var(--gold); border-radius:2px; }
+
+/* PAGE TABS */
+.page-tabs {
+ position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
+ background: var(--navy-deep);
+ border-bottom: 1px solid var(--border);
+ display: flex; gap: 0; overflow-x: auto;
+ padding: 0 20px;
+}
+.page-tab {
+ padding: 16px 20px;
+ min-width: 80px;
+ text-align: center;
+ font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+ color: var(--slate); cursor: pointer; border: none;
+ background: none; font-family: 'DM Sans', sans-serif;
+ border-bottom: 2px solid transparent;
+ white-space: nowrap; transition: all 0.2s;
+}
+.page-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.page { display: none; }
+.page.active { display: block; }
+
+/* NAV */
+nav {
+ position: sticky; top: 48px;
+ z-index: 1000; padding: 20px 60px;
+ display: flex; align-items: center; justify-content: space-between;
+ background: var(--glass); backdrop-filter: blur(20px);
+ border-bottom: 1px solid var(--border);
+}
+.nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+.nav-logo-img { height: 38px; width: auto; filter: brightness(0) invert(1); }
+.nav-links { display:flex; align-items:center; gap:36px; list-style:none; }
+.nav-links a {
+ text-decoration:none; color:var(--slate-light);
+ font-size:13px; font-weight:500; letter-spacing:1px; text-transform:uppercase;
+ transition:color 0.3s; position:relative;
+}
+.nav-links a::after {
+ content:''; position:absolute; bottom:-4px; left:0;
+ width:0; height:1px; background:var(--gold); transition:width 0.3s;
+}
+.nav-links a:hover, .nav-links a.active { color:var(--gold); }
+.nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+.nav-cta {
+ background:transparent; border:1px solid var(--gold);
+ color:var(--gold) !important; padding:10px 22px; border-radius:2px;
+ font-size:12px !important; letter-spacing:2px !important;
+}
+.nav-cta:hover { background:var(--gold) !important; color:var(--navy) !important; }
+.nav-cta::after { display:none !important; }
+
+/* HERO */
+.hero {
+ min-height: 100vh; display:flex; align-items:center;
+ position:relative; overflow:hidden; padding: 80px 60px 60px;
+}
+.hero-bg {
+ position:absolute; inset:0;
+ background:
+ radial-gradient(ellipse 80% 60% at 70% 40%, rgba(201,168,76,0.04) 0%, transparent 70%),
+ radial-gradient(ellipse 50% 50% at 20% 80%, rgba(10,35,66,0.9) 0%, transparent 60%);
+}
+.hero-grid {
+ position:absolute; inset:0;
+ background-image:
+ linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+ linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+ background-size: 60px 60px;
+}
+.hero-content { position:relative; z-index:2; max-width:680px; }
+.eyebrow { display:flex; align-items:center; gap:12px; margin-bottom:28px; }
+.eyebrow-line { width:36px; height:1px; background:var(--gold); }
+.eyebrow-text { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); font-weight:500; }
+.hero h1 {
+ font-family:'Cormorant Garamond',serif;
+ font-size: clamp(48px,6vw,84px); font-weight:300;
+ line-height:1.05; color:var(--white); margin-bottom:28px;
+}
+.hero h1 em { font-style:italic; color:var(--gold); }
+.hero-sub {
+ font-size:16px; line-height:1.8; color:var(--slate);
+ max-width:520px; margin-bottom:44px; font-weight:300;
+}
+.hero-actions { display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
+.btn-primary {
+ background:var(--gold); color:var(--navy);
+ padding:15px 34px; border:none; border-radius:2px;
+ font-size:12px; font-weight:600; letter-spacing:2px; text-transform:uppercase;
+ text-decoration:none; cursor:pointer; transition:all 0.3s; display:inline-block;
+}
+.btn-primary:hover { background:var(--gold-light); transform:translateY(-2px); box-shadow:0 12px 40px rgba(201,168,76,0.25); }
+.btn-outline {
+ background:transparent; color:var(--white);
+ padding:14px 34px; border:1px solid rgba(255,255,255,0.2); border-radius:2px;
+ font-size:12px; font-weight:500; letter-spacing:2px; text-transform:uppercase;
+ text-decoration:none; cursor:pointer; transition:all 0.3s; display:inline-block;
+}
+.btn-outline:hover { border-color:var(--gold); color:var(--gold); transform:translateY(-2px); }
+.hero-visual {
+ position:absolute; right:0; top:0; bottom:0; width:40%;
+ overflow:hidden;
+}
+.hero-visual-inner {
+ position:absolute; inset:0;
+ background:linear-gradient(135deg, var(--navy-mid) 0%, #0d2b4a 100%);
+ clip-path:polygon(18% 0%, 100% 0%, 100% 100%, 0% 100%);
+ display:flex; align-items:center; justify-content:center;
+}
+.hero-card {
+ background:rgba(201,168,76,0.08); border:1px solid var(--border);
+ border-radius:4px; padding:32px; width:260px;
+ backdrop-filter:blur(10px); transform:rotate(-3deg); margin-top:40px;
+}
+.hero-card h3 { font-family:'Cormorant Garamond',serif; font-size:20px; color:var(--gold); margin-bottom:8px; }
+.hero-card p { font-size:13px; color:var(--slate); line-height:1.7; }
+.hero-tag {
+ display:inline-block; background:rgba(201,168,76,0.15);
+ border:1px solid var(--border); color:var(--gold);
+ font-size:10px; letter-spacing:2px; text-transform:uppercase;
+ padding:6px 14px; border-radius:2px; margin-top:14px;
+}
+.hero-scroll {
+ position:absolute; bottom:40px; left:60px;
+ display:flex; align-items:center; gap:10px;
+}
+.scroll-line {
+ width:1px; height:44px;
+ background:linear-gradient(to bottom, transparent, var(--gold));
+}
+.scroll-text { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--slate); writing-mode:vertical-rl; }
+
+/* SECTIONS */
+section { padding:100px 60px; }
+.sec-eyebrow { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+.sec-eyebrow-line { width:28px; height:1px; background:var(--gold); }
+.sec-eyebrow-text { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); font-weight:500; }
+.sec-title {
+ font-family:'Cormorant Garamond',serif;
+ font-size:clamp(32px,4vw,52px); font-weight:400;
+ color:var(--white); line-height:1.15; margin-bottom:18px;
+}
+.sec-title em { font-style:italic; color:var(--gold); }
+.sec-sub { font-size:15px; color:var(--slate); line-height:1.8; max-width:540px; font-weight:300; }
+
+/* STEPS */
+.steps-bg { background:var(--navy-mid); position:relative; }
+.steps-bg::before { content:""; position:absolute; inset:0; background:radial-gradient(ellipse 50% 40% at 20% 50%, rgba(201,168,76,0.03) 0%, transparent 70%); pointer-events:none; }
+.steps-grid {
+ display:grid; grid-template-columns:repeat(4,1fr); gap:2px; margin-top:64px;
+}
+.step-card {
+ background:var(--navy); padding:44px 32px;
+ border:1px solid var(--border); position:relative; overflow:hidden;
+ transition:all 0.4s;
+}
+.step-card::before {
+ content:''; position:absolute; top:0; left:0; right:0; height:2px;
+ background:linear-gradient(90deg, transparent, var(--gold), transparent);
+ transform:translateX(-100%); transition:transform 0.6s;
+}
+.step-card:hover::before { transform:translateX(0); }
+.step-card:hover { transform:translateY(-6px); border-color:rgba(201,168,76,0.35); box-shadow:0 20px 50px rgba(0,0,0,0.25); }
+.step-num {
+ font-family:'Cormorant Garamond',serif; font-size:68px; font-weight:300;
+ color:rgba(201,168,76,0.1); line-height:1; margin-bottom:20px;
+}
+.step-card h3 { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:500; color:var(--white); margin-bottom:10px; }
+.step-card p { font-size:13px; color:var(--slate); line-height:1.8; }
+
+/* SERVICES GRID */
+.services-grid {
+ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:64px;
+}
+.svc-card {
+ background:var(--navy-mid); border:1px solid var(--border);
+ padding:44px; border-radius:2px; position:relative; overflow:hidden; transition:all 0.4s;
+}
+.svc-card::after {
+ content:''; position:absolute; bottom:0; left:0; width:0; height:2px;
+ background:var(--gold); transition:width 0.5s;
+}
+.svc-card:hover::after { width:100%; }
+.svc-card:hover { transform:translateY(-4px); box-shadow:0 24px 60px rgba(0,0,0,0.25); border-color:rgba(201,168,76,0.3); }
+.svc-icon { font-size:28px; margin-bottom:24px; display:block; }
+.svc-card h3 { font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:500; color:var(--white); margin-bottom:14px; }
+.svc-card p { font-size:14px; color:var(--slate); line-height:1.9; }
+
+/* WHY */
+.why-bg { background:var(--navy-mid); position:relative; }
+.why-bg::before { content:""; position:absolute; inset:0; background:radial-gradient(ellipse 60% 50% at 80% 50%, rgba(201,168,76,0.03) 0%, transparent 70%); pointer-events:none; }
+.why-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; margin-top:64px; }
+.why-list { display:flex; flex-direction:column; gap:20px; }
+.why-item {
+ display:flex; gap:18px; padding:24px 28px;
+ border:1px solid transparent; border-radius:2px; transition:all 0.3s;
+}
+.why-item:hover { border-color:var(--border); background:rgba(201,168,76,0.04); }
+.why-dot { width:8px; height:8px; background:var(--gold); border-radius:50%; margin-top:7px; flex-shrink:0; }
+.why-item h4 { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:500; color:var(--white); margin-bottom:6px; }
+.why-item p { font-size:13px; color:var(--slate); line-height:1.8; }
+.why-visual-wrap { position:relative; height:460px; }
+.why-box {
+ position:absolute; border:1px solid var(--border);
+ border-radius:4px; padding:32px; background:var(--navy);
+}
+.why-box.large { top:0; left:0; right:56px; height:280px; display:flex; flex-direction:column; justify-content:flex-end; }
+.why-box.small { bottom:0; right:0; width:210px; padding:26px; }
+.why-label { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+.why-box h3 { font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:400; color:var(--white); line-height:1.3; }
+.why-box p { font-size:13px; color:var(--slate); margin-top:10px; line-height:1.7; }
+
+/* CTA STRIP */
+.cta-strip {
+ padding:80px 60px;
+ background:linear-gradient(135deg, var(--navy-mid), var(--navy));
+ text-align:center;
+}
+.cta-strip .sec-eyebrow { justify-content:center; }
+.cta-strip .sec-title { max-width:600px; margin:0 auto 16px; }
+.cta-strip .sec-sub { margin:0 auto 40px; text-align:center; }
+
+/* ABOUT */
+.about-intro { display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:start; }
+.about-text h2 { font-family:'Cormorant Garamond',serif; font-size:38px; font-weight:400; color:var(--white); line-height:1.2; margin-bottom:24px; }
+.about-text h2 em { font-style:italic; color:var(--gold); }
+.about-text p { font-size:15px; color:var(--slate); line-height:1.9; margin-bottom:18px; font-weight:300; }
+.values { display:flex; flex-direction:column; gap:18px; }
+.val-item { padding:24px 28px; border-left:2px solid var(--border); transition:all 0.3s; }
+.val-item:hover { border-left-color:var(--gold); }
+.val-item h4 { font-family:'Cormorant Garamond',serif; font-size:19px; color:var(--white); margin-bottom:6px; }
+.val-item p { font-size:13px; color:var(--slate); line-height:1.7; }
+
+/* CONTACT */
+.contact-layout { display:grid; grid-template-columns:1fr 1.4fr; gap:72px; align-items:start; }
+.contact-info h2 { font-family:'Cormorant Garamond',serif; font-size:38px; font-weight:400; color:var(--white); line-height:1.2; margin-bottom:20px; }
+.contact-info h2 em { font-style:italic; color:var(--gold); }
+.contact-info p { font-size:14px; color:var(--slate); line-height:1.8; margin-bottom:36px; }
+.c-detail { display:flex; gap:14px; align-items:flex-start; margin-bottom:20px; }
+.c-icon { width:38px; height:38px; border:1px solid var(--border); border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; }
+.c-text label { display:block; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:3px; }
+.c-text span { font-size:13px; color:var(--slate-light); }
+.form-box { background:var(--navy-mid); border:1px solid var(--border); padding:48px 44px; border-radius:2px; }
+.form-box h3 { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; color:var(--white); margin-bottom:6px; }
+.form-box p { font-size:13px; color:var(--slate); margin-bottom:32px; }
+.f-tabs { display:flex; gap:0; margin-bottom:32px; border-bottom:1px solid var(--border); }
+.f-tab {
+ padding:11px 20px; font-size:12px; letter-spacing:1px; text-transform:uppercase;
+ color:var(--slate); cursor:pointer; border-bottom:2px solid transparent;
+ background:none; border-top:none; border-left:none; border-right:none;
+ font-family:'DM Sans',sans-serif; transition:all 0.3s;
+}
+.f-tab.active { color:var(--gold); border-bottom-color:var(--gold); }
+.f-panel { display:none; }
+.f-panel.active { display:block; }
+.f-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.f-group { margin-bottom:20px; }
+.f-group label { display:block; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+.f-group input, .f-group select, .f-group textarea {
+ width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--border);
+ border-radius:2px; padding:13px 16px; color:var(--white);
+ font-family:'DM Sans',sans-serif; font-size:13px; transition:all 0.3s; outline:none;
+ appearance:none;
+}
+.f-group input:focus, .f-group select:focus, .f-group textarea:focus { border-color:var(--gold); background:rgba(201,168,76,0.04); }
+.f-group select option { background:var(--navy-mid); }
+.f-group textarea { resize:vertical; min-height:110px; }
+.f-note { font-size:11px; color:var(--slate); margin-bottom:24px; line-height:1.6; }
+
+/* PAGE HERO */
+.page-hero {
+ min-height:48vh; display:flex; align-items:flex-end;
+ padding:100px 60px 72px; position:relative; overflow:hidden;
+}
+.ph-bg { position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 30% 50%, rgba(201,168,76,0.05) 0%, transparent 70%); }
+.ph-grid {
+ position:absolute; inset:0;
+ background-image:linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+ background-size:60px 60px;
+}
+.ph-content { position:relative; z-index:2; }
+.ph-content h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(44px,6vw,76px); font-weight:300; color:var(--white); line-height:1.05; }
+.ph-content h1 em { font-style:italic; color:var(--gold); }
+
+/* SERVICES PAGE */
+.svcs-page-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:64px; }
+.svc-page-card {
+ background:var(--navy-mid); border:1px solid var(--border);
+ padding:44px 36px; border-radius:2px; transition:all 0.4s; position:relative; overflow:hidden;
+}
+.svc-page-card::before {
+ content:''; position:absolute; top:0; left:0; right:0; height:2px;
+ background:linear-gradient(90deg, var(--gold), var(--gold-light));
+ transform:scaleX(0); transform-origin:left; transition:transform 0.5s;
+}
+.svc-page-card:hover::before { transform:scaleX(1); }
+.svc-page-card:hover { transform:translateY(-6px); }
+.spc-icon { font-size:28px; margin-bottom:20px; display:block; }
+.svc-page-card h3 { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:500; color:var(--white); margin-bottom:12px; }
+.svc-page-card p { font-size:13px; color:var(--slate); line-height:1.9; margin-bottom:18px; }
+.svc-page-card ul { list-style:none; }
+.svc-page-card ul li { font-size:12px; color:var(--slate-light); padding:5px 0; border-bottom:1px solid rgba(201,168,76,0.08); display:flex; align-items:center; gap:8px; }
+.svc-page-card ul li::before { content:''; width:3px; height:3px; background:var(--gold); border-radius:50%; flex-shrink:0; }
+
+/* FOOTER */
+footer { background:var(--navy-deep); border-top:1px solid var(--border); padding:64px 60px 32px; }
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr; gap:56px; padding-bottom:44px; border-bottom:1px solid var(--border); margin-bottom:32px; }
+.footer-logo { height:44px; width:auto; filter:brightness(0) invert(1); margin-bottom:14px; display:block; }
+.footer-brand p { font-size:13px; color:var(--slate); line-height:1.8; max-width:300px; }
+.footer-col h4 { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:18px; }
+.footer-col ul { list-style:none; }
+.footer-col ul li { margin-bottom:10px; }
+.footer-col ul li a { text-decoration:none; color:var(--slate); font-size:13px; transition:color 0.3s; }
+.footer-col ul li a:hover { color:var(--gold); }
+.footer-bottom { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+.footer-bottom p { font-size:11px; color:var(--slate); }
+.footer-bottom span { color:var(--gold); }
+
+/* DIRECTOR CARD */
+.director-card { display:flex; gap:20px; align-items:flex-start; background:var(--navy-mid); border:1px solid var(--border); padding:24px 28px; border-radius:2px; max-width:480px; }
+.directors-wrap { display:flex; flex-direction:column; gap:16px; margin-top:36px; }
+.directors-wrap .director-card { max-width:100%; }
+.director-avatar { width:52px; height:52px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:700; color:var(--navy); flex-shrink:0; }
+.director-name { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:500; color:var(--white); margin-bottom:3px; }
+.director-title { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+.director-bio { font-size:13px; color:var(--slate); line-height:1.7; }
+.director-avatar { width:68px; height:68px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:700; color:var(--navy); flex-shrink:0; }
+.director-name { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:500; color:var(--white); margin-bottom:4px; }
+.director-title { font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--gold); margin-bottom:14px; }
+.director-bio { font-size:13px; color:var(--slate); line-height:1.8; }
+
+/* LOGO fallback */
+.logo-fallback { display:flex; align-items:center; gap:10px; }
+.logo-icon { width:38px; height:38px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-weight:700; font-size:18px; color:var(--navy); }
+.logo-text { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:600; color:var(--white); letter-spacing:1px; }
+.logo-text span { color:var(--gold); }
+.nav-logo-img { height: 42px; width: auto; filter: brightness(0) invert(1); transition: filter 0.3s; }
+.nav-logo:hover .nav-logo-img { filter: brightness(0) invert(1) drop-shadow(0 0 8px rgba(201,168,76,0.3)); }
+
+/* MOBILE MENU */
+.mobile-menu-btn {
+ display: none;
+ flex-direction: column;
+ gap: 5px;
+ cursor: pointer;
+ padding: 8px;
+ z-index: 1001;
+}
+.mobile-menu-btn span {
+ display: block;
+ width: 24px;
+ height: 2px;
+ background: var(--gold);
+ transition: all 0.3s;
+}
+.mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+.mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+.nav-links.mobile-open {
+ display: flex !important;
+ position: fixed;
+ top: 0; left: 0; right: 0; bottom: 0;
+ background: var(--glass);
+ backdrop-filter: blur(30px);
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ gap: 32px;
+ z-index: 999;
+ padding: 80px 24px;
+}
+.nav-links.mobile-open a {
+ font-size: 18px;
+ letter-spacing: 2px;
+}
+.nav-links.mobile-open .nav-cta {
+ margin-top: 16px;
+}
+
+/* PAGE TABS - mobile scroll */
+.page-tabs {
+ -webkit-overflow-scrolling: touch;
+ scrollbar-width: none;
+}
+.page-tabs::-webkit-scrollbar { display: none; }
+
+/* DIRECTORS WRAPPER */
+.directors-wrap {
+ margin-top: 44px;
+ display: flex;
+ flex-direction: column;
+ gap: 20px;
+}
+.directors-wrap .director-card {
+ max-width: 100%;
+}
+
+/* Touch-friendly buttons */
+.btn-primary, .btn-outline, .page-tab, .f-tab {
+ -webkit-tap-highlight-color: transparent;
+ touch-action: manipulation;
+}
+
+/* Prevent text selection on tabs */
+.page-tab {
+ user-select: none;
+ -webkit-user-select: none;
+}
+
+@media(max-width:900px){
+ nav { padding:16px 24px; }
+ .nav-links { display:none; }
+ .mobile-menu-btn { display:flex; }
+ section { padding:60px 24px; }
+ .hero { padding:80px 24px 60px; }
+ .hero-visual { display:none; }
+ .steps-grid { grid-template-columns:1fr 1fr; }
+ .services-grid { grid-template-columns:1fr; }
+ .why-grid { grid-template-columns:1fr; }
+ .why-visual-wrap { display:none; }
+ .about-intro { grid-template-columns:1fr; }
+ .contact-layout { grid-template-columns:1fr; }
+ .svcs-page-grid { grid-template-columns:1fr 1fr; }
+ .footer-grid { grid-template-columns:1fr 1fr; }
+ .page-hero { padding:80px 24px 56px; }
+ .f-row { grid-template-columns:1fr; }
+}
+@media(max-width:600px){
+ .steps-grid { grid-template-columns:1fr; }
+ .svcs-page-grid { grid-template-columns:1fr; }
+ .director-card { flex-direction:column; gap:16px; padding:20px 22px; }
+ .director-avatar { width:48px; height:48px; font-size:20px; }
+ .director-name { font-size:18px; }
+ .director-title { font-size:9px; }
+ .directors-wrap { gap:12px; margin-top:28px; }
+}
+</style>
+<base target="_blank">
+<!--
+============================================================
+GOOGLE FORMS SETUP INSTRUCTIONS
+============================================================
+
+To save form data to Google Drive (via Google Sheets):
+
+STEP 1: Create Google Forms
+1. Go to https://forms.google.com
+2. Create a new form for "Job Applications"
+3. Add these fields (matching the form above):
+   - First Name (Short answer)
+   - Last Name (Short answer)
+   - Email Address (Short answer)
+   - Phone Number (Short answer)
+   - City / Province (Short answer)
+   - Years of Sales Experience (Multiple choice)
+   - Preferred Market (Multiple choice)
+   - Tell us about yourself (Paragraph)
+
+4. Create another form for "General Enquiries"
+5. Add fields:
+   - Your Name (Short answer)
+   - Company (Short answer)
+   - Email Address (Short answer)
+   - Subject (Multiple choice)
+   - Message (Paragraph)
+
+STEP 2: Get Form Entry IDs
+1. Open your Google Form
+2. Click "Send" → "Link" icon → copy the form URL
+3. Right-click → "View page source"
+4. Search for "entry." to find the field IDs
+5. Replace the entry.XXXXXXXXXX IDs in the HTML above
+
+STEP 3: Get Form Action URL
+1. The form action URL looks like:
+   https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse
+2. Replace "YOUR_APPLY_FORM_ID" and "YOUR_ENQUIRY_FORM_ID" in the JavaScript above
+
+STEP 4: Link to Google Sheets
+1. In Google Forms, click "Responses" tab
+2. Click the green Sheets icon
+3. Choose "Create a new spreadsheet"
+4. Data will auto-save to Google Sheets (which is in Google Drive)
+
+STEP 5: Test
+1. Fill out the form on your website
+2. Check the Google Sheet for the response
+============================================================
+-->
+</head>
+<body>
+
+<!-- PAGE TABS -->
+<div class="page-tabs">
+ <button class="page-tab active" onclick="showPage('home',this)">🏠 Home</button>
+ <button class="page-tab" onclick="showPage('about',this)">About</button>
+ <button class="page-tab" onclick="showPage('services',this)">Services</button>
+ <button class="page-tab" onclick="showPage('contact',this)">Contact</button>
+ </div>
+
+<!-- ═══════════ HOME ═══════════ -->
+<div class="page active" id="page-home">
+<nav>
+ <a href="#" class="nav-logo">
+ <img src="logo.png" alt="Olyon Group" class="nav-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="logo-fallback" style="display:none;">
+ <div class="logo-icon">OG</div>
+ <span class="logo-text">Olyon <span>Group</span></span>
+ </div>
+ </a>
+ <div class="mobile-menu-btn" onclick="toggleMobileMenu(this)">
+ <span></span><span></span><span></span>
+ </div>
+ <ul class="nav-links">
+ <li><a href="#" class="active">Home</a></li>
+ <li><a href="#" onclick="showPage('about',document.querySelectorAll('.page-tab')[1]);return false;">About</a></li>
+ <li><a href="#" onclick="showPage('services',document.querySelectorAll('.page-tab')[2]);return false;">Services</a></li>
+ <li><a href="#" onclick="showPage('contact',document.querySelectorAll('.page-tab')[3]);return false;">Contact</a></li>
+ <li><a href="#" onclick="showPage('contact',document.querySelectorAll('.page-tab')[3]);return false;" class="nav-cta">Apply Now</a></li>
+ </ul>
+</nav>
+
+<div class="hero">
+ <div class="hero-bg"></div>
+ <div class="hero-grid"></div>
+ <div class="hero-content">
+ <div class="eyebrow">
+ <div class="eyebrow-line"></div>
+ <span class="eyebrow-text">South African Talent</span>
+ </div>
+ <h1>Your Career.<br><em>Global Reach.</em><br>From South Africa.</h1>
+ <p class="hero-sub">Olyon Group places ambitious South African professionals into roles, with leading companies in the United Kingdom and Australia without leaving home.</p>
+ <div class="hero-actions">
+ <a href="#" onclick="showPage('contact',document.querySelectorAll('.page-tab')[3]);return false;" class="btn-primary">Apply for a Role</a>
+ <a href="#" onclick="showPage('services',document.querySelectorAll('.page-tab')[2]);return false;" class="btn-outline">How It Works</a>
+ </div>
+ </div>
+ <div class="hero-visual">
+ <div class="hero-visual-inner">
+ <div class="hero-card">
+ <h3>Career Placement</h3>
+ <p>Work with UK & Australian companies from South Africa, earning competitive international-grade salaries.</p>
+ <span class="hero-tag">Now Hiring</span>
+ </div>
+ </div>
+ </div>
+ <div class="hero-scroll">
+ <div class="scroll-line"></div>
+ <span class="scroll-text">Scroll</span>
+ </div>
+</div>
+
+<section class="steps-bg">
+ <div class="sec-eyebrow"><div class="sec-eyebrow-line"></div><span class="sec-eyebrow-text">The Process</span></div>
+ <h2 class="sec-title">How <em>it works</em></h2>
+ <p class="sec-sub">From application to placement, we guide you through every step of your international career journey.</p>
+ <div class="steps-grid">
+ <div class="step-card">
+ <div class="step-num">01</div>
+ <h3>Apply Online</h3>
+ <p>Submit your application. Tell us about your experience, communication skills, and career goals.</p>
+ </div>
+ <div class="step-card">
+ <div class="step-num">02</div>
+ <h3>Interview & Screening</h3>
+ <p>We conduct a thorough interview and skills assessment to understand your strengths.</p>
+ </div>
+ <div class="step-card">
+ <div class="step-num">03</div>
+ <h3>Client Match</h3>
+ <p>We match you with a UK or Australian company that fits your experience and career aspirations.</p>
+ </div>
+ <div class="step-card">
+ <div class="step-num">04</div>
+ <h3>Placement & Support</h3>
+ <p>You're placed and begin your role as an Olyon Group employee with full HR support.</p>
+ </div>
+ </div>
+</section>
+
+<section>
+ <div class="sec-eyebrow"><div class="sec-eyebrow-line"></div><span class="sec-eyebrow-text">What We Offer</span></div>
+ <h2 class="sec-title">Built for <em>ambitious</em><br>South African talent</h2>
+ <div class="services-grid">
+ <div class="svc-card">
+ <span class="svc-icon">🌍</span>
+ <h3>International Placement</h3>
+ <p>Work for UK and Australian companies without relocating. Earn competitive salaries benchmarked against international markets, paid into your South African bank account.</p>
+ </div>
+ <div class="svc-card">
+ <span class="svc-icon">🤝</span>
+ <h3>Sustainable Career Growth</h3>
+ <p>As an integral part of the Olyon Group team, you are fully supported by our internal infrastructure. We manage your PAYE, UIF, and all HR obligations directly, allowing you to focus entirely on your professional performance.</p>
+ </div>
+ <div class="svc-card">
+ <span class="svc-icon">📈</span>
+ <h3>Career Development</h3>
+ <p>Gain international experience that supercharges your career. Work with modern CRM tools, proven methodologies, and world-class teams.</p>
+ </div>
+ <div class="svc-card">
+ <span class="svc-icon">🛡️</span>
+ <h3>Full Support</h3>
+ <p>From onboarding to performance support, Olyon Group is with you throughout your placement. We are your employer, your advocate, and your partner.</p>
+ </div>
+ </div>
+</section>
+
+<section class="why-bg">
+ <div class="why-grid">
+ <div>
+ <div class="sec-eyebrow"><div class="sec-eyebrow-line"></div><span class="sec-eyebrow-text">Why Choose Us</span></div>
+ <h2 class="sec-title">The <em>Olyon</em><br>difference</h2>
+ <p class="sec-sub" style="margin-bottom:44px;">We are not a temp agency. We are a long-term career partner dedicated to elevating South African talent on the international stage.</p>
+ <div class="why-list">
+ <div class="why-item">
+ <div class="why-dot"></div>
+ <div><h4>You Stay Employed in SA</h4><p>No relocation, no visa stress. Work internationally from home with full South African employment protections.</p></div>
+ </div>
+ <div class="why-item">
+ <div class="why-dot"></div>
+ <div><h4>Real International Experience</h4><p>Work directly within UK and Australian teams using their tools, processes, and culture.</p></div>
+ </div>
+ <div class="why-item">
+ <div class="why-dot"></div>
+ <div><h4>Competitive, Reliable Pay</h4><p>Fixed monthly salary paid on time, every time. No commission-only risk. No payment delays.</p></div>
+ </div>
+ </div>
+ </div>
+ <div class="why-visual-wrap">
+ <div class="why-box large">
+ <div class="why-label">Olyon Group</div>
+ <h3>South African talent.<br>International impact.</h3>
+ <p>Connecting the best talent in SA with the fastest-growing companies in the UK and Australia.</p>
+ </div>
+ <div class="why-box small">
+ <div class="why-label">Markets</div>
+ <p style="font-size:13px;color:var(--slate-light);margin-top:8px;">🇿🇦 South Africa<br>🇬🇧 United Kingdom<br>🇦🇺 Australia</p>
+ </div>
+ </div>
+ </div>
+</section>
+
+<div class="cta-strip">
+ <div class="sec-eyebrow" style="justify-content:center;"><div class="sec-eyebrow-line"></div><span class="sec-eyebrow-text">Ready to Start?</span><div class="sec-eyebrow-line"></div></div>
+ <h2 class="sec-title">Start your <em>international</em><br>career today</h2>
+ <p class="sec-sub">Submit your application and our team will be in touch within 48 hours.</p>
+ <a href="#" onclick="showPage('contact',document.querySelectorAll('.page-tab')[3]);return false;" class="btn-primary" style="margin-top:40px;display:inline-block;">Apply for a Role</a>
+</div>
+
+<footer>
+ <div class="footer-grid">
+ <div class="footer-brand">
+ <img src="logo.png" alt="Olyon Group" style="height:44px;width:auto;filter:brightness(0) invert(1);margin-bottom:14px;display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="logo-fallback" style="margin-bottom:14px;display:none;">
+ <div class="logo-icon">OG</div>
+ <span class="logo-text">Olyon <span>Group</span></span>
+ </div>
+ <p>Placing South African talent with leading UK and Australian companies. Your international career starts here.</p>
+ <p style="margin-top:14px;font-size:12px;color:var(--slate);">📍 Sandton, Johannesburg, 2196<br>✉️ staffing@olyongroup.com</p>
+ </div>
+ <div class="footer-col">
+ <h4>Navigation</h4>
+ <ul>
+ <li><a href="#">Home</a></li>
+ <li><a href="#" onclick="showPage('about',document.querySelectorAll('.page-tab')[1]);return false;">About Us</a></li>
+ <li><a href="#" onclick="showPage('services',document.querySelectorAll('.page-tab')[2]);return false;">Services</a></li>
+ <li><a href="#" onclick="showPage('contact',document.querySelectorAll('.page-tab')[3]);return false;">Contact</a></li>
+ </ul>
+ </div>
+ <div class="footer-col">
+ <h4>Staff</h4>
+ <ul>
+ <li><a href="#" onclick="showPage('contact',document.querySelectorAll('.page-tab')[3]);return false;">Apply for a Role</a></li>
+ <li><a href="#" onclick="showPage('contact',document.querySelectorAll('.page-tab')[3]);return false;">Client Enquiry</a></li>
+ </ul>
+ </div>
+ </div>
+ <div class="footer-bottom">
+ <p>© 2026 <span>Olyon Group (Pty) Ltd</span>. All rights reserved.</p>
+ <p>Sandton, Johannesburg, 2196, South Africa</p>
+ </div>
+</footer>
+</div>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<div class="page" id="page-about">
+<nav>
+ <a href="#" onclick="showPage('home',document.querySelectorAll('.page-tab')[0]);return false;" class="nav-logo">
+ <img src="logo.png" alt="Olyon Group" class="nav-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="logo-fallback" style="display:none;">
+ <div class="logo-icon">OG</div>
+ <span class="logo-text">Olyon <span>Group</span></span>
+ </div>
+ </a>
+ <div class="mobile-menu-btn" onclick="toggleMobileMenu(this)">
+ <span></span><span></span><span></span>
+ </div>
+ <ul class="nav-links">
+ <li><a href="#" onclick="showPage('home',document.querySelectorAll('.page-tab')[0]);return false;">Home</a></li>
+ <li><a href="#" class="active">About</a></li>
+ <li><a href="#" onclick="showPage('services',document.querySelectorAll('.page-tab')[2]);return false;">Services</a></li>
+ <li><a href="#" onclick="showPage('contact',document.querySelectorAll('.page-tab')[3]);return false;">Contact</a></li>
+ <li><a href="#" onclick="showPage('contact',document.querySelectorAll('.page-tab')[3]);return false;" class="nav-cta">Apply Now</a></li>
+ </ul>
+</nav>
+<div class="page-hero"><div class="ph-bg"></div><div class="ph-grid"></div><div class="ph-content"><div class="sec-eyebrow"><div class="sec-eyebrow-line"></div><span class="sec-eyebrow-text">Our Story</span></div><h1>About <em>Olyon</em><br>Group</h1></div></div>
+<section>
+ <div class="about-intro">
+ <div class="about-text">
+ <h2>Bridging South African talent with <em>global opportunity</em></h2>
+ <p>Olyon Group was founded on a simple but powerful insight: South Africa produces world-class talent articulate, resilient, English-proficient professionals perfectly positioned to serve UK and Australian markets yet that talent rarely gets the international exposure it deserves.</p>
+ <p>We exist to change that. As a specialist staffing agency, we act as the bridge between ambitious South African professionals and growth-stage companies in the United Kingdom and Australia.</p>
+ <p>Every professional we place benefits from full HR support, reliable payroll, and the security of South African employment protections all while gaining high-impact international experience from home. </p>
+ <a href="#" onclick="showPage('contact',document.querySelectorAll('.page-tab')[3]);return false;" class="btn-primary" style="margin-top:20px;display:inline-block;">Apply for a Role</a>
+ </div>
+ <div class="values">
+ <div class="val-item"><h4>Our Mission</h4><p>To unlock international career opportunities for South African professionals by placing them with world-class UK and Australian companies without requiring them to leave home.</p></div>
+ <div class="val-item"><h4>Our Vision</h4><p>To be the most trusted staffing partner in South Africa, known for quality of talent, integrity of service, and the career outcomes we create.</p></div>
+ <div class="val-item"><h4>Integrity First</h4><p>Transparent with our clients and agents. No hidden terms, no unexpected fees. Every relationship is built on honest communication.</p></div>
+ <div class="val-item"><h4>People Over Placements</h4><p>We care about the long-term careers of the professionals we employ, not just the placement fee. Our success is measured by how our people grow and thrive.</p></div>
+ </div>
+ </div>
+</section>
+<section style="background:var(--navy-mid);">
+ <div class="sec-eyebrow"><div class="sec-eyebrow-line"></div><span class="sec-eyebrow-text">Leadership</span></div>
+ <h2 class="sec-title">Meet the <em>team</em></h2>
+ <div class="directors-wrap">
+ <div class="director-card">
+ <div class="director-avatar">TM</div>
+ <div>
+ <div class="director-name">Themba Karabo Mkhize</div>
+ <div class="director-title">Co-Founder & CEO</div>
+ <p class="director-bio">CEO of Olyon Group and the driving force behind the company's mission to elevate South African talent on the global stage. We built Olyon Group on the belief that geography should never limit potential.</p>
+ </div>
+ </div>
+ <div class="director-card">
+ <div class="director-avatar">LS</div>
+ <div>
+ <div class="director-name">Lisa Sixpence</div>
+ <div class="director-title">Co-Founder & Director</div>
+ <p class="director-bio">Strategic architect behind our mission to globalize South African talent.</p>
+ </div>
+ </div>
+ </div>
+</section>
+<div class="cta-strip">
+ <h2 class="sec-title">Ready to take your career <em>global?</em></h2>
+ <p class="sec-sub">Apply today and let us match you with an international career opportunity.</p>
+ <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:40px;">
+ <a href="#" onclick="showPage('contact',document.querySelectorAll('.page-tab')[3]);return false;" class="btn-primary">Apply for a Role</a>
+ <a href="#" onclick="showPage('services',document.querySelectorAll('.page-tab')[2]);return false;" class="btn-outline">View Services</a>
+ </div>
+</div>
+<footer>
+ <div class="footer-grid">
+ <div class="footer-brand">
+ <img src="logo.png" alt="Olyon Group" style="height:44px;width:auto;filter:brightness(0) invert(1);margin-bottom:14px;display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="logo-fallback" style="margin-bottom:14px;display:none;">
+ <div class="logo-icon">OG</div>
+ <span class="logo-text">Olyon <span>Group</span></span>
+ </div>
+ <p>Placing South African talent with leading UK and Australian companies.</p>
+ </div>
+ <div class="footer-col"><h4>Navigation</h4><ul><li><a href="#">Home</a></li><li><a href="#">About Us</a></li><li><a href="#">Services</a></li><li><a href="#">Contact</a></li></ul></div>
+ <div class="footer-col"><h4>Staff</h4><ul><li><a href="#">Apply for a Role</a></li></ul></div>
+ </div>
+ <div class="footer-bottom"><p>© 2026 <span>Olyon Group (Pty) Ltd</span>. All rights reserved.</p></div>
+</footer>
+</div>
+
+<!-- ═══════════ SERVICES ═══════════ -->
+<div class="page" id="page-services">
+<nav>
+ <a href="#" onclick="showPage('home',document.querySelectorAll('.page-tab')[0]);return false;" class="nav-logo"><img src="logo.png" alt="Olyon Group" class="nav-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="logo-fallback" style="display:none;"><div class="logo-icon">OG</div><span class="logo-text">Olyon <span>Group</span></span></div></a>
+ <div class="mobile-menu-btn" onclick="toggleMobileMenu(this)">
+ <span></span><span></span><span></span>
+ </div>
+ <ul class="nav-links">
+ <li><a href="#" onclick="showPage('home',document.querySelectorAll('.page-tab')[0]);return false;">Home</a></li>
+ <li><a href="#" onclick="showPage('about',document.querySelectorAll('.page-tab')[1]);return false;">About</a></li>
+ <li><a href="#" class="active">Services</a></li>
+ <li><a href="#" onclick="showPage('contact',document.querySelectorAll('.page-tab')[3]);return false;">Contact</a></li>
+ <li><a href="#" onclick="showPage('contact',document.querySelectorAll('.page-tab')[3]);return false;" class="nav-cta">Apply Now</a></li>
+ </ul>
+</nav>
+<div class="page-hero"><div class="ph-bg"></div><div class="ph-grid"></div><div class="ph-content"><div class="sec-eyebrow"><div class="sec-eyebrow-line"></div><span class="sec-eyebrow-text">What We Do</span></div><h1>Our <em>Services</em></h1></div></div>
+<section>
+ <div style="max-width:640px;margin-bottom:64px;">
+ <div class="sec-eyebrow"><div class="sec-eyebrow-line"></div><span class="sec-eyebrow-text">For Our Candidates</span></div>
+ <h2 class="sec-title">Everything you need to <em>launch</em> your international career</h2>
+ <p class="sec-sub">End-to-end placement and employment support for South African professionals who want to work with world-class companies in the UK and Australia.</p>
+ </div>
+ <div class="svcs-page-grid">
+ <div class="svc-page-card"><span class="spc-icon">🎯</span><h3>Career Placement</h3><p>We match you to the right UK or Australian client based on your experience, skills, and career goals.</p><ul><li>Dedicated client matching</li><li>Role briefing and preparation</li><li>Onboarding support</li><li>Ongoing placement management</li></ul></div>
+ <div class="svc-page-card"><span class="spc-icon">👔</span><h3>Permanent Employment</h3><p>You are employed by Olyon Group with full rights under South African law.</p><ul><li>PAYE & UIF handled</li><li>Annual leave per BCEA</li><li>Sick leave & family leave</li></ul></div>
+ <div class="svc-page-card"><span class="spc-icon">💰</span><h3>Competitive Salary</h3><p>Fixed monthly salary benchmarked against international SDR markets, paid reliably into your SA bank account.</p><ul><li>Fixed monthly gross salary</li><li>Paid on last working day</li><li>Annual salary reviews</li><li>No commission-only risk</li></ul></div>
+ <div class="svc-page-card"><span class="spc-icon">🌐</span><h3>International Exposure</h3><p>Work within the client's team using their tools, processes, and channels real global experience from SA.</p><ul><li>UK & Australian client teams</li><li>Modern CRM & sales tools</li><li>International methodologies</li><li>Cross-cultural experience</li></ul></div>
+ <div class="svc-page-card"><span class="spc-icon">🛡️</span><h3>HR & Compliance</h3><p>We handle all employment administration so you never worry about compliance or labour disputes.</p><ul><li>Employment contract management</li><li>Payslips</li><li>POPIA-compliant data handling</li></ul></div>
+ <div class="svc-page-card"><span class="spc-icon">🔄</span><h3>Replacement Guarantee</h3><p>If a placement doesn't work out within 30 days, Olyon Group finds a replacement at no extra cost.</p><ul><li>30-day guarantee period</li><li>Free replacement placement</li><li>Fair performance assessment</li><li>Transparent process</li></ul></div>
+ </div>
+</section>
+<div class="cta-strip">
+ <h2 class="sec-title">Sounds like the right <em>fit?</em></h2>
+ <p class="sec-sub">Submit your application and our team will contact you within 48 hours.</p>
+ <a href="#" onclick="showPage('contact',document.querySelectorAll('.page-tab')[3]);return false;" class="btn-primary" style="margin-top:40px;display:inline-block;">Apply for a Role</a>
+</div>
+<footer>
+ <div class="footer-grid">
+ <div class="footer-brand">
+ <img src="logo.png" alt="Olyon Group" style="height:44px;width:auto;filter:brightness(0) invert(1);margin-bottom:14px;display:block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+ <div class="logo-fallback" style="margin-bottom:14px;display:none;">
+ <div class="logo-icon">OG</div>
+ <span class="logo-text">Olyon <span>Group</span></span>
+ </div>
+ <p>Placing South African talent with leading UK and Australian companies.</p>
+ </div>
+ <div class="footer-col"><h4>Navigation</h4><ul><li><a href="#">Home</a></li><li><a href="#">About Us</a></li><li><a href="#">Services</a></li><li><a href="#">Contact</a></li></ul></div>
+ <div class="footer-col"><h4>Staff</h4><ul><li><a href="#">Apply for a Role</a></li></ul></div>
+ </div>
+ <div class="footer-bottom"><p>© 2026 <span>Olyon Group (Pty) Ltd</span>. All rights reserved.</p></div>
+</footer>
+</div>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<div class="page" id="page-contact">
+<nav>
+ <a href="#" onclick="showPage('home',document.querySelectorAll('.page-tab')[0]);return false;" class="nav-logo"><img src="logo.png" alt="Olyon Group" class="nav-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="logo-fallback" style="display:none;"><div class="logo-icon">OG</div><span class="logo-text">Olyon <span>Group</span></span></div></a>
+ <div class="mobile-menu-btn" onclick="toggleMobileMenu(this)">
+ <span></span><span></span><span></span>
+ </div>
+ <ul class="nav-links">
+ <li><a href="#" onclick="showPage('home',document.querySelectorAll('.page-tab')[0]);return false;">Home</a></li>
+ <li><a href="#" onclick="showPage('about',document.querySelectorAll('.page-tab')[1]);return false;">About</a></li>
+ <li><a href="#" onclick="showPage('services',document.querySelectorAll('.page-tab')[2]);return false;">Services</a></li>
+ <li><a href="#" class="active">Contact</a></li>
+ <li><a href="#" class="nav-cta">Apply Now</a></li>
+ </ul>
+</nav>
+<div class="page-hero"><div class="ph-bg"></div><div class="ph-grid"></div><div class="ph-content"><div class="sec-eyebrow"><div class="sec-eyebrow-line"></div><span class="sec-eyebrow-text">Get In Touch</span></div><h1>Contact <em>&</em><br>Apply</h1></div></div>
+<section>
+ <div class="contact-layout">
+ <div class="contact-info">
+ <h2>Let's start your<br><em>journey</em> together</h2>
+ <p>Whether you're looking to apply for a role or have a general enquiry, we'd love to hear from you. Our team responds within 48 hours.</p>
+ <div class="c-detail"><div class="c-icon">✉️</div><div class="c-text"><label>Email</label><span>staffing@olyongroup.com</span></div></div>
+ <div class="c-detail"><div class="c-icon">📍</div><div class="c-text"><label>Address</label><span> Sandton, Johannesburg, 2196</span></div></div>
+ <div class="c-detail"><div class="c-icon">🌍</div><div class="c-text"><label>Placing Talent For</label><span>UK & Australian companies</span></div></div>
+ <div class="c-detail"><div class="c-icon">⏱️</div><div class="c-text"><label>Response Time</label><span>Within 48 business hours</span></div></div>
+ <div style="margin-top:40px;padding:24px 28px;border:1px solid var(--border);border-radius:2px;border-left:3px solid var(--gold);">
+ <p style="font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">Currently Hiring</p>
+ <p style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--white);margin-bottom:6px;">SDR Agents UK & AU Clients</p>
+ <p style="font-size:12px;color:var(--slate);line-height:1.7;">Long term Contract positions. Remote from South Africa. Competitive salary.</p>
+ </div>
+ </div>
+ <div class="form-box">
+ <h3>Get in touch</h3>
+ <p>Choose your enquiry type below</p>
+ <div class="f-tabs">
+ <button class="f-tab active" onclick="switchTab('apply')">Apply for a Role</button>
+ <button class="f-tab" onclick="switchTab('enquiry')">General Enquiry</button>
+ </div>
+ <div class="f-panel active" id="f-apply">
+        <form id="applyForm" onsubmit="return submitToGoogleForms(this, 'apply');">
+        <div class="f-row">
+          <div class="f-group"><label>First Name *</label><input type="text" id="apply-firstname" placeholder="Your first name" required></div>
+          <div class="f-group"><label>Last Name *</label><input type="text" id="apply-lastname" placeholder="Your last name" required></div>
+        </div>
+        <div class="f-group"><label>Email Address *</label><input type="email" id="apply-email" placeholder="your@email.com" required></div>
+        <div class="f-group"><label>Phone Number *</label><input type="tel" id="apply-phone" placeholder="+27 XX XXX XXXX" required></div>
+        <div class="f-group"><label>City / Province *</label><input type="text" id="apply-location" placeholder="e.g. Johannesburg, Gauteng" required></div>
+        <div class="f-group"><label>Years of Sales Experience *</label><select id="apply-experience" required><option value="">Select experience level</option><option value="Less than 1 year">Less than 1 year</option><option value="1 - 2 years">1 - 2 years</option><option value="2 - 3 years">2 - 3 years</option><option value="3 - 5 years">3 - 5 years</option><option value="5+ years">5+ years</option></select></div>
+        <div class="f-group"><label>Preferred Market</label><select id="apply-market"><option value="">Select preference</option><option value="United Kingdom">United Kingdom</option><option value="Australia">Australia</option><option value="No preference">No preference</option></select></div>
+        <div class="f-group"><label>Tell us about yourself *</label><textarea id="apply-message" placeholder="Briefly describe your sales experience and why you want this role..." required></textarea></div>
+        <p class="f-note">By submitting you consent to Olyon Group processing your personal information for recruitment purposes in accordance with POPIA.</p>
+        <button type="submit" class="btn-primary" style="width:100%;font-size:12px;">Submit Application</button>
+        </form>
+      </div>
+ <div class="f-panel" id="f-enquiry">
+        <form id="enquiryForm" onsubmit="return submitToGoogleForms(this, 'enquiry');">
+        <div class="f-row">
+          <div class="f-group"><label>Your Name *</label><input type="text" id="enquiry-name" placeholder="Full name" required></div>
+          <div class="f-group"><label>Company</label><input type="text" id="enquiry-company" placeholder="Your company name"></div>
+        </div>
+        <div class="f-group"><label>Email Address *</label><input type="email" id="enquiry-email" placeholder="your@email.com" required></div>
+        <div class="f-group"><label>Subject *</label><select id="enquiry-subject" required><option value="">Select a subject</option><option value="Company looking for staff">I am a company looking for SDR staff</option><option value="Candidate with question">I am a candidate with a question</option><option value="General enquiry">General enquiry</option></select></div>
+        <div class="f-group"><label>Message *</label><textarea id="enquiry-message" placeholder="How can we help you?" style="min-height:140px;" required></textarea></div>
+        <p class="f-note">By submitting you consent to Olyon Group processing your personal information to respond to your enquiry in accordance with POPIA.</p>
+        <button type="submit" class="btn-primary" style="width:100%;font-size:12px;">Send Message</button>
+        </form>
+      </div>
+ </div>
+ </div>
+</section>
+<footer>
+ <div class="footer-grid">
+ <div class="footer-brand"><div class="logo-fallback" style="margin-bottom:14px;"><div class="logo-icon">OG</div><span class="logo-text">Olyon <span>Group</span></span></div><p>Placing South African SDR talent with leading UK and Australian companies.</p></div>
+ <div class="footer-col"><h4>Navigation</h4><ul><li><a href="#">Home</a></li><li><a href="#">About Us</a></li><li><a href="#">Services</a></li><li><a href="#">Contact</a></li></ul></div>
+ <div class="footer-col"><h4>Staff</h4><ul><li><a href="#">Apply for a Role</a></li></ul></div>
+ </div>
+ <div class="footer-bottom"><p>© 2026 <span>Olyon Group (Pty) Ltd</span>. All rights reserved.</p></div>
+</footer>
+</div>
+
+
+
+<script>
+function showPage(name, tabEl) {
+ // Close mobile menu if open
+ document.querySelectorAll('.nav-links').forEach(menu => menu.classList.remove('mobile-open'));
+ document.querySelectorAll('.mobile-menu-btn').forEach(btn => btn.classList.remove('active'));
+
+ document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+ document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+ document.getElementById('page-' + name).classList.add('active');
+ if (tabEl) tabEl.classList.add('active');
+ window.scrollTo(0, 0);
+}
+
+function toggleMobileMenu(btn) {
+ const nav = btn.closest('nav');
+ const links = nav.querySelector('.nav-links');
+ btn.classList.toggle('active');
+ links.classList.toggle('mobile-open');
+}
+
+// Close mobile menu when clicking a link
+document.addEventListener('click', function(e) {
+ if (e.target.closest('.nav-links.mobile-open a')) {
+ document.querySelectorAll('.nav-links').forEach(menu => menu.classList.remove('mobile-open'));
+ document.querySelectorAll('.mobile-menu-btn').forEach(btn => btn.classList.remove('active'));
+ }
+});
+function switchTab(name) {
+ document.querySelectorAll('.f-tab').forEach(t => t.classList.remove('active'));
+ document.querySelectorAll('.f-panel').forEach(p => p.classList.remove('active'));
+ if (name === 'apply') {
+ document.querySelectorAll('.f-tab')[0].classList.add('active');
+ document.getElementById('f-apply').classList.add('active');
+ } else {
+ document.querySelectorAll('.f-tab')[1].classList.add('active');
+ document.getElementById('f-enquiry').classList.add('active');
+ }
+}
+function submitToGoogleForms(form, type) {
+  const btn = form.querySelector('button[type="submit"]');
+  const originalText = btn.innerText;
+  btn.innerText = 'Sending...';
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+
+  // Google Form submission URLs - REPLACE THESE WITH YOUR ACTUAL GOOGLE FORM URLs
+  const applyFormUrl = 'https://docs.google.com/forms/d/e/YOUR_APPLY_FORM_ID/formResponse';
+  const enquiryFormUrl = 'https://docs.google.com/forms/d/e/YOUR_ENQUIRY_FORM_ID/formResponse';
+
+  const formUrl = type === 'apply' ? applyFormUrl : enquiryFormUrl;
+
+  // Create iframe for submission (avoids CORS issues)
+  const iframe = document.createElement('iframe');
+  iframe.style.display = 'none';
+  iframe.name = 'googleFormTarget' + Date.now();
+  document.body.appendChild(iframe);
+
+  // Set form target to iframe
+  form.target = iframe.name;
+  form.action = formUrl;
+  form.method = 'POST';
+
+  // Show success after submission
+  setTimeout(function() {
+    const panel = form.closest('.f-panel');
+    panel.innerHTML = '<div style="text-align:center;padding:48px 0;"><div style="font-size:48px;margin-bottom:16px;">✅</div><h3 style="font-family:Cormorant Garamond,serif;font-size:26px;color:var(--white);margin-bottom:10px;">Thank You!</h3><p style="font-size:14px;color:var(--slate);">Your submission has been received and saved. Our team will respond within 48 business hours.</p></div>';
+
+    // Clean up iframe after delay
+    setTimeout(() => {
+      if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+    }, 5000);
+  }, 1500);
+
+  return true;
+}
+</script>
+</body>
+</html>
